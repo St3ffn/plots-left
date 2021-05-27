@@ -6,7 +6,7 @@
 *.dylib
 
 # build artifact
-plots-left
+plots-left*
 
 # Test binary, built with `go test -c`
 *.test
