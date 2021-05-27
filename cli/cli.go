@@ -4,9 +4,13 @@ import (
 	"errors"
 	"github.com/urfave/cli/v2"
 	"os"
+	"strconv"
 )
 
-var args = os.Args
+var (
+	args            = os.Args
+	reserved uint64 = 1
+)
 
 // Context describes the environment of the tool execution
 type Context struct {
@@ -20,7 +24,6 @@ type Context struct {
 
 // RunCli starts the cli which includes validation of parameters.
 func RunCli() (*Context, error) {
-	var reserved uint64
 	var path string
 	var done bool
 
@@ -44,7 +47,8 @@ func RunCli() (*Context, error) {
 				Name:        "reserve",
 				Aliases:     []string{"r"},
 				Required:    false,
-				DefaultText: "0",
+				Value:       reserved,
+				DefaultText: strconv.FormatUint(reserved, 10),
 				Usage:       "`RESERVE`. the amount of plots to reserve.",
 				Destination: &reserved,
 			},
