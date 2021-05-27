@@ -7,17 +7,17 @@ const SizeOfPlot Space = 108770046772
 
 // PlotInfo gives further plot related information of a Disk
 type PlotInfo struct {
-	Disk
+	*Disk
 	// reserved represents the amount of plots to be reserved when evaluating how many plots are left
-	reserved uint64
+	Reserved uint64
 }
 
 // PlotsTotal calculates the total amount of plots which can be stored on the Disk.
 // The amount of reserved plots is included in the assessment
 func (p PlotInfo) PlotsTotal() uint64 {
 	total := uint64(float64(p.Total) / float64(SizeOfPlot))
-	if total > p.reserved {
-		return total - p.reserved
+	if total > p.Reserved {
+		return total - p.Reserved
 	}
 	return 0
 }
@@ -27,8 +27,8 @@ func (p PlotInfo) PlotsTotal() uint64 {
 func (p PlotInfo) PlotsLeft() uint64 {
 	// don't round, simply cut
 	left := uint64(float64(p.Free) / float64(SizeOfPlot))
-	if left > p.reserved {
-		return left - p.reserved
+	if left > p.Reserved {
+		return left - p.Reserved
 	}
 	return 0
 }
