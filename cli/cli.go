@@ -34,18 +34,18 @@ func RunCli() (*Context, error) {
 	app := &cli.App{
 		Name:                 "plots-left",
 		Usage:                "find out how many plots will still fit on your hard disk",
-		UsageText:            "plots-left [-r RESERVED] PATH\n\t plots-left -r 1 /plots/nas1",
+		UsageText:            "plots-left [-r RESERVE] PATH\n\t plots-left -r 1 /plots/nas1",
 		ArgsUsage:            "PATH",
 		Description:          "Tool will perform the following calculation (AVAILABLE_DISK_SPACE/SINGLE_PLOT_SIZE)-RESERVED_PLOTS.",
 		EnableBashCompletion: true,
 		HideHelpCommand:      true,
 		Flags: []cli.Flag{
 			&cli.Uint64Flag{
-				Name:        "reserved",
+				Name:        "reserve",
 				Aliases:     []string{"r"},
 				Required:    false,
 				DefaultText: "0",
-				Usage:       "`RESERVED`. the amount of plots to reserve.",
+				Usage:       "`RESERVE`. the amount of plots to reserve.",
 				Destination: &reserved,
 			},
 		},
