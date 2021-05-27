@@ -1,4 +1,4 @@
-package Disk
+package disk
 
 import (
 	"syscall"

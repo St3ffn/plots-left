@@ -1,4 +1,4 @@
-package Disk
+package disk
 
 // SizeOfPlot in Bytes
 // A k32 will take up 101.3 GiB of space once completed
