@@ -17,67 +17,67 @@ func TestSpace(t *testing.T) {
 		wantTiB  float64
 	}{
 		{
-			name: "one byte",
-			s: 1,
+			name:     "one byte",
+			s:        1,
 			wantByte: 1,
-			wantKiB: 1.0 / float64(KiB),
-			wantMiB: 1.0 / float64(MiB),
-			wantGiB: 1.0 / float64(GiB),
-			wantTiB: 1.0 / float64(TiB),
+			wantKiB:  1.0 / float64(KiB),
+			wantMiB:  1.0 / float64(MiB),
+			wantGiB:  1.0 / float64(GiB),
+			wantTiB:  1.0 / float64(TiB),
 		},
 		{
-			name: "one kibibyte",
-			s: KiB,
+			name:     "one kibibyte",
+			s:        KiB,
 			wantByte: KiB,
-			wantKiB: 1.0,
-			wantMiB: 1.0 / float64(KiB),
-			wantGiB: 1.0 / float64(MiB),
-			wantTiB: 1.0 / float64(GiB),
+			wantKiB:  1.0,
+			wantMiB:  1.0 / float64(KiB),
+			wantGiB:  1.0 / float64(MiB),
+			wantTiB:  1.0 / float64(GiB),
 		},
 		{
-			name: "one mebibyte",
-			s: MiB,
+			name:     "one mebibyte",
+			s:        MiB,
 			wantByte: MiB,
-			wantKiB: KiB,
-			wantMiB: 1.0,
-			wantGiB: 1.0 / float64(KiB),
-			wantTiB: 1.0 / float64(MiB),
+			wantKiB:  KiB,
+			wantMiB:  1.0,
+			wantGiB:  1.0 / float64(KiB),
+			wantTiB:  1.0 / float64(MiB),
 		},
 		{
-			name: "one Gibibyte",
-			s: GiB,
+			name:     "one Gibibyte",
+			s:        GiB,
 			wantByte: GiB,
-			wantKiB: MiB,
-			wantMiB: KiB,
-			wantGiB: 1.0,
-			wantTiB: 1.0 / float64(KiB),
+			wantKiB:  MiB,
+			wantMiB:  KiB,
+			wantGiB:  1.0,
+			wantTiB:  1.0 / float64(KiB),
 		},
 		{
-			name: "one Tebibyte",
-			s: TiB,
+			name:     "one Tebibyte",
+			s:        TiB,
 			wantByte: TiB,
-			wantKiB: GiB,
-			wantMiB: MiB,
-			wantGiB: KiB,
-			wantTiB: 1.0,
+			wantKiB:  GiB,
+			wantMiB:  MiB,
+			wantGiB:  KiB,
+			wantTiB:  1.0,
 		},
 		{
-			name: "uint64 min",
-			s: 0,
+			name:     "uint64 min",
+			s:        0,
 			wantByte: 0,
-			wantKiB: 0,
-			wantMiB: 0,
-			wantGiB: 0,
-			wantTiB: 0,
+			wantKiB:  0,
+			wantMiB:  0,
+			wantGiB:  0,
+			wantTiB:  0,
 		},
 		{
-			name: "uint64 max",
-			s: 18446744073709551615,
+			name:     "uint64 max",
+			s:        18446744073709551615,
 			wantByte: 18446744073709551615,
-			wantKiB: 18446744073709551615/float64(KiB),
-			wantMiB: 18446744073709551615/float64(MiB),
-			wantGiB: 18446744073709551615/float64(GiB),
-			wantTiB: 18446744073709551615/float64(TiB),
+			wantKiB:  18446744073709551615 / float64(KiB),
+			wantMiB:  18446744073709551615 / float64(MiB),
+			wantGiB:  18446744073709551615 / float64(GiB),
+			wantTiB:  18446744073709551615 / float64(TiB),
 		},
 	}
 	for _, tt := range tests {
@@ -101,60 +101,54 @@ func TestSpace(t *testing.T) {
 	}
 }
 
-type stats struct {
-	bsize       uint32
-	blocks uint64
-	bfree       uint64
-}
-
 func TestNewDisk(t *testing.T) {
 	path := "/some/path"
 
 	tests := []struct {
-		name    string
-		scenario stats
-		want    Disk
-		wantErr bool
+		name     string
+		scenario syscall.Statfs_t
+		want     Disk
+		wantErr  bool
 	}{
 		{
 			name: "mixed",
-			scenario: stats{
-				bsize:  1024,
-				blocks: 7600,
-				bfree:  1432,
+			scenario: syscall.Statfs_t{
+				Bsize:  1024,
+				Blocks: 7600,
+				Bfree:  1432,
 			},
 			want: Disk{
 				Path:  path,
-				Total: 1024*7600,
-				Free:  1432*1024,
-				Used:  (1024*7600)-(1432*1024),
+				Total: 1024 * 7600,
+				Free:  1432 * 1024,
+				Used:  (1024 * 7600) - (1432 * 1024),
 			},
 		},
 		{
 			name: "no space left",
-			scenario: stats{
-				bsize:  8,
-				blocks: 234324234,
-				bfree:  0,
+			scenario: syscall.Statfs_t{
+				Bsize:  8,
+				Blocks: 234324234,
+				Bfree:  0,
 			},
 			want: Disk{
 				Path:  path,
-				Total: 8*234324234,
+				Total: 8 * 234324234,
 				Free:  0,
-				Used:  8*234324234,
+				Used:  8 * 234324234,
 			},
 		},
 		{
 			name: "all free",
-			scenario: stats{
-				bsize:  123,
-				blocks: 234,
-				bfree:  234,
+			scenario: syscall.Statfs_t{
+				Bsize:  123,
+				Blocks: 234,
+				Bfree:  234,
 			},
 			want: Disk{
 				Path:  path,
-				Total: 123*234,
-				Free:  123*234,
+				Total: 123 * 234,
+				Free:  123 * 234,
 				Used:  0,
 			},
 		},
@@ -162,9 +156,9 @@ func TestNewDisk(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			statfs = func(path string, stat *syscall.Statfs_t) (err error) {
-				stat.Bsize = tt.scenario.bsize
-				stat.Blocks = tt.scenario.blocks
-				stat.Bfree = tt.scenario.bfree
+				stat.Bsize = tt.scenario.Bsize
+				stat.Blocks = tt.scenario.Blocks
+				stat.Bfree = tt.scenario.Bfree
 				return nil
 			}
 			got, err := NewDisk(path)

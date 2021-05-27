@@ -12,7 +12,7 @@ func TestPlotInfo_PlotsTotal(t *testing.T) {
 			name: "1000 plots none reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Total: SizeOfPlot * 1000 + (SizeOfPlot-1),
+					Total: SizeOfPlot*1000 + (SizeOfPlot - 1),
 				},
 				reserved: 0,
 			},
@@ -32,17 +32,17 @@ func TestPlotInfo_PlotsTotal(t *testing.T) {
 			name: "1000 plots 200 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Total: SizeOfPlot * 1000 + (SizeOfPlot-1),
+					Total: SizeOfPlot*1000 + (SizeOfPlot - 1),
 				},
 				reserved: 200,
 			},
-			want: 1000-200,
+			want: 1000 - 200,
 		},
 		{
 			name: "2 plots 2 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Total: SizeOfPlot * 2 + (SizeOfPlot-1),
+					Total: SizeOfPlot*2 + (SizeOfPlot - 1),
 				},
 				reserved: 2,
 			},
@@ -52,7 +52,7 @@ func TestPlotInfo_PlotsTotal(t *testing.T) {
 			name: "1 plot 2 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Total: SizeOfPlot + (SizeOfPlot-1),
+					Total: SizeOfPlot + (SizeOfPlot - 1),
 				},
 				reserved: 2,
 			},
@@ -62,7 +62,7 @@ func TestPlotInfo_PlotsTotal(t *testing.T) {
 			name: "1 plot 50 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Total: SizeOfPlot + (SizeOfPlot-1),
+					Total: SizeOfPlot + (SizeOfPlot - 1),
 				},
 				reserved: 50,
 			},
@@ -88,7 +88,7 @@ func TestPlotInfo_PlotsLeft(t *testing.T) {
 			name: "1000 plots none reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Free: SizeOfPlot * 1000 + (SizeOfPlot-1),
+					Free: SizeOfPlot*1000 + (SizeOfPlot - 1),
 				},
 				reserved: 0,
 			},
@@ -108,17 +108,17 @@ func TestPlotInfo_PlotsLeft(t *testing.T) {
 			name: "1000 plots 200 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Free: SizeOfPlot * 1000 + (SizeOfPlot-1),
+					Free: SizeOfPlot*1000 + (SizeOfPlot - 1),
 				},
 				reserved: 200,
 			},
-			want: 1000-200,
+			want: 1000 - 200,
 		},
 		{
 			name: "2 plots 2 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Free: SizeOfPlot * 2 + (SizeOfPlot-1),
+					Free: SizeOfPlot*2 + (SizeOfPlot - 1),
 				},
 				reserved: 2,
 			},
@@ -128,7 +128,7 @@ func TestPlotInfo_PlotsLeft(t *testing.T) {
 			name: "1 plot 2 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Free: SizeOfPlot + (SizeOfPlot-1),
+					Free: SizeOfPlot + (SizeOfPlot - 1),
 				},
 				reserved: 2,
 			},
@@ -138,7 +138,7 @@ func TestPlotInfo_PlotsLeft(t *testing.T) {
 			name: "1 plot 50 reserved",
 			input: PlotInfo{
 				Disk: Disk{
-					Free: SizeOfPlot + (SizeOfPlot-1),
+					Free: SizeOfPlot + (SizeOfPlot - 1),
 				},
 				reserved: 50,
 			},
