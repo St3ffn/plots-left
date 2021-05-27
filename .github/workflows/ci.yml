@@ -35,5 +35,5 @@ jobs:
             ${{ runner.os }}-go-
       - name: Test
         run: go test -v ./...
-#      - name: Try run main
-#        run: go run main.go -h
+      - name: Try run main
+        run: go run main.go -h
