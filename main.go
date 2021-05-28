@@ -1,3 +1,4 @@
+// cli tool to find out how many plots will still fit on your hard disk
 package main
 
 import (

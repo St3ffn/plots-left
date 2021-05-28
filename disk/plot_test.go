@@ -1,6 +1,8 @@
 package disk
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPlotInfo_PlotsTotal(t *testing.T) {
 	tests := []struct {

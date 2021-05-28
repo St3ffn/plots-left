@@ -1,3 +1,4 @@
+// Package cli contains the command line interface, defines related parameters and validates them
 package cli
 
 import (

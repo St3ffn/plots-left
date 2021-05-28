@@ -1,3 +1,4 @@
+// Package disk contains disk and plot related operations
 package disk
 
 import (
