@@ -10,6 +10,7 @@ import (
 
 var (
 	args            = os.Args
+	// the default amount of plots to reserve
 	reserved uint64 = 1
 )
 
