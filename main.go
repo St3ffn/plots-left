@@ -3,8 +3,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/St3ffn/plots-left/cli"
-	"github.com/St3ffn/plots-left/disk"
+	"github.com/St3ffn/plots-left/internal/cli"
+	"github.com/St3ffn/plots-left/pkg/disk"
 	"os"
 )
 
