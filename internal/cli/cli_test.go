@@ -17,7 +17,7 @@ func TestRunCli(t *testing.T) {
 			name: "ok",
 			args: []string{"plots-left", "/my/fancy/path"},
 			want: Context{
-				Reserved: reserved,
+				Reserved: Reserved,
 				Path:     "/my/fancy/path",
 				Done:     false,
 			},
@@ -26,7 +26,7 @@ func TestRunCli(t *testing.T) {
 			name: "help short",
 			args: []string{"plots-left", "-h"},
 			want: Context{
-				Reserved: reserved,
+				Reserved: Reserved,
 				Done:     true,
 			},
 		},
@@ -34,7 +34,7 @@ func TestRunCli(t *testing.T) {
 			name: "help long",
 			args: []string{"plots-left", "--help"},
 			want: Context{
-				Reserved: reserved,
+				Reserved: Reserved,
 				Done:     true,
 			},
 		},
@@ -79,7 +79,7 @@ func TestRunCli(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			args = tt.args
+			Args = tt.args
 			got, err := RunCli()
 			if err != nil {
 				if tt.wantErr == nil || !reflect.DeepEqual(err, tt.wantErr) {

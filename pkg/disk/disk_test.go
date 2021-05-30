@@ -155,7 +155,7 @@ func TestNewDisk(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			statfs = func(path string, stat *syscall.Statfs_t) (err error) {
+			Statfs = func(path string, stat *syscall.Statfs_t) (err error) {
 				stat.Bsize = tt.scenario.Bsize
 				stat.Blocks = tt.scenario.Blocks
 				stat.Bfree = tt.scenario.Bfree

@@ -53,14 +53,14 @@ func (s Space) Tebibyte() float64 {
 	return float64(s) / float64(TiB)
 }
 
-// statfs represents the syscall to get the Statfs information
-var statfs = syscall.Statfs
+// Statfs represents the syscall to get the Statfs information
+var Statfs = syscall.Statfs
 
 // NewDisk creates a new Disk from the given path.
 // Details about the disk space will be fetched via statfs.
 func NewDisk(path string) (*Disk, error) {
 	fs := syscall.Statfs_t{}
-	err := statfs(path, &fs)
+	err := Statfs(path, &fs)
 	if err != nil {
 		return nil, err
 	}

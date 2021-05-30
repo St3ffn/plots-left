@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	args            = os.Args
-	// the default amount of plots to reserve
-	reserved uint64 = 1
+	Args = os.Args
+	// Reserved defines the default amount of plots to reserve
+	Reserved uint64 = 1
 )
 
 // Context describes the environment of the tool execution
@@ -49,10 +49,10 @@ func RunCli() (*Context, error) {
 				Name:        "reserve",
 				Aliases:     []string{"r"},
 				Required:    false,
-				Value:       reserved,
-				DefaultText: strconv.FormatUint(reserved, 10),
+				Value:       Reserved,
+				DefaultText: strconv.FormatUint(Reserved, 10),
 				Usage:       "`RESERVE`. the amount of plots to reserve.",
-				Destination: &reserved,
+				Destination: &Reserved,
 			},
 		},
 		Action: func(c *cli.Context) error {
@@ -69,13 +69,13 @@ func RunCli() (*Context, error) {
 		Copyright: "GNU GPLv3",
 	}
 
-	err := app.Run(args)
+	err := app.Run(Args)
 	if err != nil {
 		return nil, err
 	}
 
 	return &Context{
-		Reserved: reserved,
+		Reserved: Reserved,
 		Path:     path,
 		Done:     done,
 	}, nil

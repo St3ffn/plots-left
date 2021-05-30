@@ -8,29 +8,34 @@ import (
 	"os"
 )
 
+var (
+	stdout = os.Stdout
+	stderr = os.Stderr
+)
+
 func main() {
-	if err := run(); err != nil {
-		_, _ = fmt.Fprintf(os.Stderr, "%s\n", err)
+	left, err := run()
+	if err != nil {
+		_, _ = fmt.Fprintf(stderr, "%s\n", err)
 		os.Exit(1)
 	}
+	_, _ = fmt.Fprintln(stdout, left)
 }
 
 // run the cli
-func run() error {
+func run() (uint64, error) {
 	ctx, err := cli.RunCli()
 	if err != nil {
-		return err
+		return 0, err
 	}
 	if ctx.Done {
-		return nil
+		return 0, nil
 	}
 	d, err := disk.NewDisk(ctx.Path)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	info := disk.PlotInfo{Disk: d, Reserved: ctx.Reserved}
 
-	fmt.Println(info.PlotsLeft())
-
-	return nil
+	return info.PlotsLeft(), nil
 }
