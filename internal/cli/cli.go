@@ -60,7 +60,7 @@ func RunCli() (*Context, error) {
 				Aliases:     []string{"v"},
 				Required:    false,
 				Value:       false,
-				Usage:       "`VERBOSE`. to enable verbose mode.",
+				Usage:       "enable verbose mode.",
 				Destination: &verbose,
 			},
 		},

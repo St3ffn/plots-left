@@ -48,6 +48,18 @@ To specify the amount of plots to reserve use `--reserve` or `-r`
 # reserve 1 chia plot
 > plots-left -r 1 /path/to/plots
 ```
+
+To get more details use the verbose mode via `--verbose` or `-v`
+```bash
+# find out how many chia plots will still fit on /path/to/plots
+# reserve 1 chia plot
+# verbose mode
+> plots-left -r 1 -v /path/to/plots
+
+Path    Total   Reserved        Left
+/tmp    100     1               98
+```
+
 Call with `--help` or `-h` to see the help page
 ```bash
 > plots-left -h
@@ -56,14 +68,15 @@ NAME:
    plots-left - find out how many plots will still fit on your hard disk
 
 USAGE:
-   plots-left [-r RESERVE] PATH
-   plots-left -r 1 /plots/nas1
+   plots-left [-r RESERVE] [-v] PATH
+   plots-left -v -r 1 /plots/nas1
 
 DESCRIPTION:
    Tool will perform the following calculation (AVAILABLE_DISK_SPACE/SINGLE_PLOT_SIZE)-RESERVED_PLOTS.
 
 GLOBAL OPTIONS:
-   --reserve RESERVE, -r RESERVE  RESERVE. the amount of plots to reserve. (default: 0)
+   --reserve RESERVE, -r RESERVE  RESERVE. the amount of plots to reserve. (default: 1)
+   --verbose, -v                  enable verbose mode. (default: false)
    --help, -h                     show help (default: false)
 
 COPYRIGHT:
