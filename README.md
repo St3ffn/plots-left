@@ -56,8 +56,8 @@ To get more details use the verbose mode via `--verbose` or `-v`
 # verbose mode
 > plots-left -r 1 -v /path/to/plots
 
-Path    Total   Reserved        Left
-/tmp    100     1               98
+Path       Total Stored Reserved Left
+/plots/one 110   109    1        0
 ```
 
 Call with `--help` or `-h` to see the help page
