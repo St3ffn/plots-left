@@ -2,7 +2,12 @@ package main
 
 import (
 	"github.com/St3ffn/plots-left/internal/cli"
+	"github.com/St3ffn/plots-left/internal/printer"
 	"github.com/St3ffn/plots-left/pkg/disk"
+	"io/ioutil"
+	"log"
+	"os"
+	"reflect"
 	"syscall"
 	"testing"
 )
@@ -12,7 +17,7 @@ func Test_run(t *testing.T) {
 		name    string
 		args    []string
 		statfs  syscall.Statfs_t
-		want    uint64
+		want    string
 		wantErr bool
 	}{
 		{
@@ -23,7 +28,7 @@ func Test_run(t *testing.T) {
 				Blocks: uint64(disk.SizeOfPlot) * (20 + cli.Reserved),
 				Bfree:  uint64(disk.SizeOfPlot) * (20 + cli.Reserved),
 			},
-			want:    20,
+			want:    "20\n",
 			wantErr: false,
 		},
 		{
@@ -34,7 +39,7 @@ func Test_run(t *testing.T) {
 				Blocks: 12324234,
 				Bfree:  12324230,
 			},
-			want:    0,
+			want:    "0\n",
 			wantErr: false,
 		},
 		{
@@ -45,7 +50,7 @@ func Test_run(t *testing.T) {
 				Blocks: uint64(disk.SizeOfPlot) * (20 + cli.Reserved),
 				Bfree:  uint64(disk.SizeOfPlot) * (1 + cli.Reserved),
 			},
-			want:    1,
+			want:    "1\n",
 			wantErr: false,
 		},
 	}
@@ -58,12 +63,34 @@ func Test_run(t *testing.T) {
 				return nil
 			}
 			cli.Args = tt.args
-			got, err := run()
-			if (err != nil) != tt.wantErr {
+			tmpFile, err := ioutil.TempFile(os.TempDir(), "test-output")
+			if err != nil {
+				log.Fatal("Cannot create temporary file", err)
+			}
+			printer.Output = tmpFile
+
+			gotErr := run()
+			// Close the file
+			if err := tmpFile.Close(); err != nil {
+				log.Fatal(err)
+			}
+
+			content, err := ioutil.ReadFile(tmpFile.Name())
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			// Convert []byte to string and print to screen
+			got := string(content)
+
+			// cleanup
+			_ = os.Remove(tmpFile.Name())
+
+			if (gotErr != nil) != tt.wantErr {
 				t.Errorf("run() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if got != tt.want {
+			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("run() got = %v, want %v", got, tt.want)
 			}
 		})

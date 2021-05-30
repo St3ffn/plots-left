@@ -13,13 +13,10 @@ type PlotInfo struct {
 }
 
 // PlotsTotal calculates the total amount of plots which can be stored on the Disk.
-// The amount of reserved plots is included in the assessment
+// The amount of reserved plots is not included in the assessment
 func (p PlotInfo) PlotsTotal() uint64 {
 	total := uint64(float64(p.Total) / float64(SizeOfPlot))
-	if total > p.Reserved {
-		return total - p.Reserved
-	}
-	return 0
+	return total
 }
 
 // PlotsLeft calculates the amount of plots which can still be stored on the Disk.

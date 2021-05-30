@@ -18,8 +18,9 @@ var (
 type Context struct {
 	// Reserved represents the amount of plots to be reserved
 	Reserved uint64
-	// the path
-	Path string
+	Path     string
+	// Verbose mode
+	Verbose bool
 	// Done indicates that we are done (--help, --version...)
 	Done bool
 }
@@ -27,7 +28,7 @@ type Context struct {
 // RunCli starts the cli which includes validation of parameters.
 func RunCli() (*Context, error) {
 	var path string
-	var done bool
+	var verbose, done bool
 
 	cli.HelpFlag = &cli.BoolFlag{
 		Name:        "help",
@@ -39,7 +40,7 @@ func RunCli() (*Context, error) {
 	app := &cli.App{
 		Name:                 "plots-left",
 		Usage:                "find out how many plots will still fit on your hard disk",
-		UsageText:            "plots-left [-r RESERVE] PATH\n\t plots-left -r 1 /plots/nas1",
+		UsageText:            "plots-left [-r RESERVE] [-v] PATH\n\t plots-left -v -r 1 /plots/nas1",
 		ArgsUsage:            "PATH",
 		Description:          "Tool will perform the following calculation (AVAILABLE_DISK_SPACE/SINGLE_PLOT_SIZE)-RESERVED_PLOTS.",
 		EnableBashCompletion: true,
@@ -53,6 +54,14 @@ func RunCli() (*Context, error) {
 				DefaultText: strconv.FormatUint(Reserved, 10),
 				Usage:       "`RESERVE`. the amount of plots to reserve.",
 				Destination: &Reserved,
+			},
+			&cli.BoolFlag{
+				Name:        "verbose",
+				Aliases:     []string{"v"},
+				Required:    false,
+				Value:       false,
+				Usage:       "`VERBOSE`. to enable verbose mode.",
+				Destination: &verbose,
 			},
 		},
 		Action: func(c *cli.Context) error {
@@ -76,6 +85,7 @@ func RunCli() (*Context, error) {
 
 	return &Context{
 		Reserved: Reserved,
+		Verbose:  verbose,
 		Path:     path,
 		Done:     done,
 	}, nil

@@ -4,38 +4,43 @@ package main
 import (
 	"fmt"
 	"github.com/St3ffn/plots-left/internal/cli"
+	"github.com/St3ffn/plots-left/internal/printer"
 	"github.com/St3ffn/plots-left/pkg/disk"
 	"os"
 )
 
 var (
-	stdout = os.Stdout
 	stderr = os.Stderr
 )
 
 func main() {
-	left, err := run()
-	if err != nil {
+	if err := run(); err != nil {
 		_, _ = fmt.Fprintf(stderr, "%s\n", err)
 		os.Exit(1)
 	}
-	_, _ = fmt.Fprintln(stdout, left)
 }
 
 // run the cli
-func run() (uint64, error) {
+func run() error {
 	ctx, err := cli.RunCli()
 	if err != nil {
-		return 0, err
+		return err
 	}
 	if ctx.Done {
-		return 0, nil
+		return nil
 	}
 	d, err := disk.NewDisk(ctx.Path)
 	if err != nil {
-		return 0, err
+		return err
 	}
 	info := disk.PlotInfo{Disk: d, Reserved: ctx.Reserved}
 
-	return info.PlotsLeft(), nil
+	var p printer.Printer = printer.DefaultPrinter{}
+	if ctx.Verbose {
+		p = printer.VerbosePrinter{}
+	}
+
+	p.Print(&info)
+
+	return nil
 }

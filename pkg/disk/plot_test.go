@@ -11,60 +11,50 @@ func TestPlotInfo_PlotsTotal(t *testing.T) {
 		want  uint64
 	}{
 		{
-			name: "1000 plots none reserved",
+			name: "1000 plots",
 			input: PlotInfo{
 				Disk: &Disk{
-					Total: SizeOfPlot*1000 + (SizeOfPlot - 1),
+					Total: SizeOfPlot*1000,
 				},
 				Reserved: 0,
 			},
 			want: 1000,
 		},
 		{
-			name: "1000 plots none reserved point",
-			input: PlotInfo{
-				Disk: &Disk{
-					Total: SizeOfPlot * 1000,
-				},
-				Reserved: 0,
-			},
-			want: 1000,
-		},
-		{
-			name: "1000 plots 200 reserved",
-			input: PlotInfo{
-				Disk: &Disk{
-					Total: SizeOfPlot*1000 + (SizeOfPlot - 1),
-				},
-				Reserved: 200,
-			},
-			want: 1000 - 200,
-		},
-		{
-			name: "2 plots 2 reserved",
+			name: "2 plots",
 			input: PlotInfo{
 				Disk: &Disk{
 					Total: SizeOfPlot*2 + (SizeOfPlot - 1),
 				},
-				Reserved: 2,
+				Reserved: 2234,
 			},
-			want: 0,
+			want: 2,
 		},
 		{
-			name: "1 plot 2 reserved",
+			name: "1 plot",
 			input: PlotInfo{
 				Disk: &Disk{
-					Total: SizeOfPlot + (SizeOfPlot - 1),
+					Total: SizeOfPlot + 23,
 				},
 				Reserved: 2,
 			},
-			want: 0,
+			want: 1,
 		},
 		{
-			name: "1 plot 50 reserved",
+			name: "1 plot another",
 			input: PlotInfo{
 				Disk: &Disk{
-					Total: SizeOfPlot + (SizeOfPlot - 1),
+					Total: SizeOfPlot,
+				},
+				Reserved: 2,
+			},
+			want: 1,
+		},
+		{
+			name: "0 plots",
+			input: PlotInfo{
+				Disk: &Disk{
+					Total: SizeOfPlot - 1,
 				},
 				Reserved: 50,
 			},
