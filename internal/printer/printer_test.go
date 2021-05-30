@@ -18,7 +18,7 @@ func TestDefaultPrinter_Print(t *testing.T) {
 		{
 			name: "none",
 			info: disk.PlotInfo{
-				Disk:     &disk.Disk{
+				Disk: &disk.Disk{
 					Path:  "/tmp",
 					Total: 0,
 					Free:  0,
@@ -31,7 +31,7 @@ func TestDefaultPrinter_Print(t *testing.T) {
 			name: "one",
 			info: disk.PlotInfo{
 				Reserved: 2,
-				Disk:     &disk.Disk{
+				Disk: &disk.Disk{
 					Path:  "/tmp",
 					Total: disk.SizeOfPlot * 5,
 					Free:  disk.SizeOfPlot * 3,
@@ -44,7 +44,7 @@ func TestDefaultPrinter_Print(t *testing.T) {
 			name: "five",
 			info: disk.PlotInfo{
 				Reserved: 1,
-				Disk:     &disk.Disk{
+				Disk: &disk.Disk{
 					Path:  "/tmp",
 					Total: disk.SizeOfPlot * 7,
 					Free:  disk.SizeOfPlot * 6,
@@ -103,7 +103,7 @@ func TestVerbosePrinter_Print(t *testing.T) {
 					Used:  0,
 				},
 			},
-			want: "Path\tTotal\tReserved\tLeft\n/tmp\t0\t0\t\t0\n",
+			want: "Path Total Stored Reserved Left\n/tmp 0     0      0        0\n",
 		},
 		{
 			name: "one",
@@ -116,7 +116,7 @@ func TestVerbosePrinter_Print(t *testing.T) {
 					Used:  disk.SizeOfPlot,
 				},
 			},
-			want: "Path\tTotal\tReserved\tLeft\n/tmp\t5\t2\t\t1\n",
+			want: "Path Total Stored Reserved Left\n/tmp 5     1      2        1\n",
 		},
 		{
 			name: "five",
@@ -129,7 +129,7 @@ func TestVerbosePrinter_Print(t *testing.T) {
 					Used:  disk.SizeOfPlot,
 				},
 			},
-			want: "Path\tTotal\tReserved\tLeft\n/tmp\t7\t1\t\t5\n",
+			want: "Path Total Stored Reserved Left\n/tmp 7     1      1        5\n",
 		},
 	}
 	for _, tt := range tests {

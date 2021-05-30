@@ -57,23 +57,23 @@ func TestRunCli(t *testing.T) {
 			},
 		},
 		{
-			name: "err no path",
-			args: []string{"plots-left"},
+			name:    "err no path",
+			args:    []string{"plots-left"},
 			wantErr: errors.New("PATH is missing"),
 		},
 		{
-			name: "err too many paths",
-			args: []string{"plots-left", "/tmp/a", "other/path"},
+			name:    "err too many paths",
+			args:    []string{"plots-left", "/tmp/a", "other/path"},
 			wantErr: errors.New("only one PATH allowed"),
 		},
 		{
-			name: "unknown parameter -x",
-			args: []string{"plots-left", "-x", "asdas"},
+			name:    "unknown parameter -x",
+			args:    []string{"plots-left", "-x", "asdas"},
 			wantErr: errors.New("flag provided but not defined: -x"),
 		},
 		{
-			name: "invalid reserve paramter",
-			args: []string{"plots-left", "-r", "12.12", "/home/steffen"},
+			name:    "invalid reserve paramter",
+			args:    []string{"plots-left", "-r", "12.12", "/home/steffen"},
 			wantErr: errors.New("invalid value \"12.12\" for flag -r: parse error"),
 		},
 	}

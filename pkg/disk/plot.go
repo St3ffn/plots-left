@@ -19,6 +19,12 @@ func (p PlotInfo) PlotsTotal() uint64 {
 	return total
 }
 
+// PlotsStored calculates the amount of plots which are stored on the Disk.
+// The amount of reserved plots is not included in the assessment
+func (p PlotInfo) PlotsStored() uint64 {
+	return uint64(float64(p.Used) / float64(SizeOfPlot))
+}
+
 // PlotsLeft calculates the amount of plots which can still be stored on the Disk.
 // The amount of reserved plots is included in the assessment
 func (p PlotInfo) PlotsLeft() uint64 {
