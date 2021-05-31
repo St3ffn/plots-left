@@ -4,11 +4,12 @@ package printer
 import (
 	"fmt"
 	"github.com/St3ffn/plots-left/pkg/disk"
+	"io"
 	"os"
 	"text/tabwriter"
 )
 
-var Output = os.Stdout
+var Stdout io.Writer = os.Stdout
 
 // Printer interface to print something
 type Printer interface {
@@ -19,17 +20,17 @@ type DefaultPrinter struct{}
 
 // Print prints the amount of plots left
 func (d DefaultPrinter) Print(info *disk.PlotInfo) {
-	_, _ = fmt.Fprintln(Output, info.PlotsLeft())
+	_, _ = fmt.Fprintln(Stdout, info.PlotsLeft())
 }
 
-type VerbosePrinter struct {}
+type VerbosePrinter struct{}
 
 const verboseHeader string = "Path\tTotal\tStored\tReserved\tLeft\n"
 
 // Print prints two lines with the following columns:
 // Path, Total Amount of Plots, Amount of Plots Stored, Plots Left
 func (v VerbosePrinter) Print(info *disk.PlotInfo) {
-	w := tabwriter.NewWriter(Output, 0, 0, 1, ' ', tabwriter.TabIndent)
+	w := tabwriter.NewWriter(Stdout, 0, 0, 1, ' ', tabwriter.TabIndent)
 	_, _ = fmt.Fprint(w, verboseHeader)
 	_, _ = fmt.Fprintf(w, "%s\t%d\t%d\t%d\t%d\n",
 		info.Path, info.PlotsTotal(), info.PlotsStored(), info.Reserved, info.PlotsLeft())

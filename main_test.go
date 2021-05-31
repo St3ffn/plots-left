@@ -1,12 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"github.com/St3ffn/plots-left/internal/cli"
 	"github.com/St3ffn/plots-left/internal/printer"
 	"github.com/St3ffn/plots-left/pkg/disk"
-	"io/ioutil"
-	"log"
-	"os"
 	"reflect"
 	"syscall"
 	"testing"
@@ -63,30 +61,13 @@ func Test_run(t *testing.T) {
 				return nil
 			}
 			cli.Args = tt.args
-			tmpFile, err := ioutil.TempFile(os.TempDir(), "test-output")
-			if err != nil {
-				log.Fatal("Cannot create temporary file", err)
-			}
-			printer.Output = tmpFile
+			b := new(bytes.Buffer)
+			printer.Stdout = b
 
-			gotErr := run()
-			// Close the file
-			if err := tmpFile.Close(); err != nil {
-				log.Fatal(err)
-			}
+			err := run()
+			got := b.String()
 
-			content, err := ioutil.ReadFile(tmpFile.Name())
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			// Convert []byte to string and print to screen
-			got := string(content)
-
-			// cleanup
-			_ = os.Remove(tmpFile.Name())
-
-			if (gotErr != nil) != tt.wantErr {
+			if (err != nil) != tt.wantErr {
 				t.Errorf("run() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}

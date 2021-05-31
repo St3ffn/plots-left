@@ -1,10 +1,8 @@
 package printer
 
 import (
+	"bytes"
 	"github.com/St3ffn/plots-left/pkg/disk"
-	"io/ioutil"
-	"log"
-	"os"
 	"reflect"
 	"testing"
 )
@@ -56,30 +54,10 @@ func TestDefaultPrinter_Print(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tmpFile, err := ioutil.TempFile(os.TempDir(), "test-output")
-			if err != nil {
-				log.Fatal("Cannot create temporary file", err)
-			}
-			Output = tmpFile
-
+			b := new(bytes.Buffer)
+			Stdout = b
 			DefaultPrinter{}.Print(&tt.info)
-
-			// Close the file
-			if err := tmpFile.Close(); err != nil {
-				log.Fatal(err)
-			}
-
-			content, err := ioutil.ReadFile(tmpFile.Name())
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			// Convert []byte to string and print to screen
-			got := string(content)
-
-			// cleanup
-			_ = os.Remove(tmpFile.Name())
-
+			got := b.String()
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Print() got = %v, want %v", got, tt.want)
 			}
@@ -134,29 +112,10 @@ func TestVerbosePrinter_Print(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tmpFile, err := ioutil.TempFile(os.TempDir(), "test-output")
-			if err != nil {
-				log.Fatal("Cannot create temporary file", err)
-			}
-			Output = tmpFile
-
+			b := new(bytes.Buffer)
+			Stdout = b
 			VerbosePrinter{}.Print(&tt.info)
-
-			// Close the file
-			if err := tmpFile.Close(); err != nil {
-				log.Fatal(err)
-			}
-
-			content, err := ioutil.ReadFile(tmpFile.Name())
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			// Convert []byte to string and print to screen
-			got := string(content)
-
-			// cleanup
-			_ = os.Remove(tmpFile.Name())
+			got := b.String()
 
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Print() got = %v, want %v", got, tt.want)

@@ -6,11 +6,12 @@ import (
 	"github.com/St3ffn/plots-left/internal/cli"
 	"github.com/St3ffn/plots-left/internal/printer"
 	"github.com/St3ffn/plots-left/pkg/disk"
+	"io"
 	"os"
 )
 
 var (
-	stderr = os.Stderr
+	stderr io.Writer = os.Stderr
 )
 
 func main() {
