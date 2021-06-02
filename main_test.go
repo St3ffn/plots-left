@@ -51,6 +51,12 @@ func Test_run(t *testing.T) {
 			want:    "1\n",
 			wantErr: false,
 		},
+		{
+			name: "version",
+			args: []string{"plots-left", "-V"},
+			want:    "plots-left version 0.0.0\n",
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

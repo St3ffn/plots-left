@@ -2,6 +2,7 @@ package cli
 
 import (
 	"errors"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -76,11 +77,25 @@ func TestRunCli(t *testing.T) {
 			args:    []string{"plots-left", "-r", "12.12", "/home/steffen"},
 			wantErr: errors.New("invalid value \"12.12\" for flag -r: parse error"),
 		},
+		{
+			name: "show version short",
+			args: []string{"plots-left", "-V"},
+			want: Context{
+				Done:     true,
+			},
+		},
+		{
+			name: "show version long",
+			args: []string{"plots-left", "--version"},
+			want: Context{
+				Done:     true,
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			Args = tt.args
-			got, err := RunCli()
+			got, err := RunCli(os.Stdout, "idk")
 			if err != nil {
 				if tt.wantErr == nil || !reflect.DeepEqual(err, tt.wantErr) {
 					t.Errorf("RunCli() error = %v, wantErr %v", err, tt.wantErr)

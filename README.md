@@ -60,6 +60,13 @@ Path       Total Stored Reserved Left
 /plots/one 110   109    1        0
 ```
 
+To get the current version use `--version` or `-V`
+```bash
+> plots-left -V
+
+plots-left version x.x.x
+```
+
 Call with `--help` or `-h` to see the help page
 ```bash
 > plots-left -h
@@ -71,6 +78,9 @@ USAGE:
    plots-left [-r RESERVE] [-v] PATH
    plots-left -v -r 1 /plots/nas1
 
+VERSION:
+   0.3.0
+
 DESCRIPTION:
    Tool will perform the following calculation (AVAILABLE_DISK_SPACE/SINGLE_PLOT_SIZE)-RESERVED_PLOTS.
 
@@ -78,6 +88,7 @@ GLOBAL OPTIONS:
    --reserve RESERVE, -r RESERVE  RESERVE. the amount of plots to reserve. (default: 1)
    --verbose, -v                  enable verbose mode. (default: false)
    --help, -h                     show help (default: false)
+   --version, -V                  print version (default: false)
 
 COPYRIGHT:
    GNU GPLv3

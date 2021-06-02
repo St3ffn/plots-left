@@ -3,7 +3,9 @@ package cli
 
 import (
 	"errors"
+	"fmt"
 	"github.com/urfave/cli/v2"
+	"io"
 	"os"
 	"strconv"
 )
@@ -26,7 +28,7 @@ type Context struct {
 }
 
 // RunCli starts the cli which includes validation of parameters.
-func RunCli() (*Context, error) {
+func RunCli(writer io.Writer, version string) (*Context, error) {
 	var path string
 	var verbose, done bool
 
@@ -35,6 +37,15 @@ func RunCli() (*Context, error) {
 		Aliases:     []string{"h"},
 		Usage:       "show help",
 		Destination: &done,
+	}
+	cli.VersionFlag = &cli.BoolFlag{
+		Name:    "version",
+		Aliases: []string{"V"},
+		Usage:   "print version",
+	}
+	cli.VersionPrinter = func(c *cli.Context) {
+		_, _ = fmt.Fprintf(c.App.Writer, "%s version %s\n", c.App.Name, c.App.Version)
+		done = true
 	}
 
 	app := &cli.App{
@@ -45,6 +56,7 @@ func RunCli() (*Context, error) {
 		Description:          "Tool will perform the following calculation (AVAILABLE_DISK_SPACE/SINGLE_PLOT_SIZE)-RESERVED_PLOTS.",
 		EnableBashCompletion: true,
 		HideHelpCommand:      true,
+		Version:              version,
 		Flags: []cli.Flag{
 			&cli.Uint64Flag{
 				Name:        "reserve",
@@ -77,6 +89,7 @@ func RunCli() (*Context, error) {
 		},
 		Copyright: "GNU GPLv3",
 	}
+	app.Writer = writer
 
 	err := app.Run(Args)
 	if err != nil {

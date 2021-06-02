@@ -11,6 +11,7 @@ import (
 )
 
 var (
+	GitVersion = "0.0.0"
 	stderr io.Writer = os.Stderr
 )
 
@@ -23,7 +24,7 @@ func main() {
 
 // run the cli
 func run() error {
-	ctx, err := cli.RunCli()
+	ctx, err := cli.RunCli(printer.Stdout, GitVersion)
 	if err != nil {
 		return err
 	}
