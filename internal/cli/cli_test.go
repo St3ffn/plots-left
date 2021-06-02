@@ -78,17 +78,33 @@ func TestRunCli(t *testing.T) {
 			wantErr: errors.New("invalid value \"12.12\" for flag -r: parse error"),
 		},
 		{
+			name: "verbose mode short",
+			args: []string{"plots-left", "-v", "/some/path"},
+			want: Context{
+				Path:    "/some/path",
+				Verbose: true,
+			},
+		},
+		{
+			name: "verbose mode long",
+			args: []string{"plots-left", "-verbose", "/some/path"},
+			want: Context{
+				Path:    "/some/path",
+				Verbose: true,
+			},
+		},
+		{
 			name: "show version short",
 			args: []string{"plots-left", "-V"},
 			want: Context{
-				Done:     true,
+				Done: true,
 			},
 		},
 		{
 			name: "show version long",
 			args: []string{"plots-left", "--version"},
 			want: Context{
-				Done:     true,
+				Done: true,
 			},
 		},
 	}
