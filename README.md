@@ -12,13 +12,24 @@ How many chia plots do I have left on my hard disk. The tool will work fine on a
 
 ## Getting started
 
-### Pre-requisites
+### Pre-Built Binaries
+
+Pre-built binaries can be found on the [release page](https://github.com/St3ffn/plots-left/releases).
+They are available for the following platforms: 
+
+- darwin-amd64 (64 Bit MacOS)
+- linux-amd64 (64 Bit Linux)
+- linux-arm64 (64Bit Linux for ARM)
+
+### Building from Source
+
+#### Pre-requisites
 
 - Linux, MacOS or other Unix based System
 - `git` installed
 - `go 1.16` installed
 
-### Installation 
+#### Build 
 
 Clone the repository
 
