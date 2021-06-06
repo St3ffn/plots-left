@@ -96,7 +96,7 @@ DESCRIPTION:
    Tool will perform the following calculation (AVAILABLE_DISK_SPACE/SINGLE_PLOT_SIZE)-RESERVED_PLOTS.
 
 GLOBAL OPTIONS:
-   --reserve RESERVE, -r RESERVE  RESERVE. the amount of plots to reserve. (default: 1)
+   --reserve RESERVE, -r RESERVE  RESERVE. the amount of plots to reserve. (default: 0)
    --verbose, -v                  enable verbose mode. (default: false)
    --help, -h                     show help (default: false)
    --version, -V                  print version (default: false)

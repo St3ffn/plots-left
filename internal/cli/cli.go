@@ -13,7 +13,7 @@ import (
 var (
 	Args = os.Args
 	// Reserved defines the default amount of plots to reserve
-	Reserved uint64 = 1
+	Reserved uint64 = 0
 )
 
 // Context describes the environment of the tool execution
